@@ -1,0 +1,13 @@
+
+<div class="games new">
+  <h2>Register User</h2>
+
+  <%= form_for(@game) do |f| %>
+
+      username: <%= f.text_field :username %><br />
+    <div class="form-buttons">
+      <%= f.submit("Create game") %>
+    </div>
+
+  <% end %>
+</div>

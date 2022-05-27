@@ -1,0 +1,8 @@
+<div class ='grid'>
+<table >
+  <tr><th>Name</th><th>No of cicks</th><th>Time</th></tr>
+  <%@userrank.each  do|u| %>
+  <tr><td><%=u.username%></td><td><%=u.sweep_count%></td><td><%=u.time_taken%></td></tr>
+  <%end%>
+</table>
+</div>
