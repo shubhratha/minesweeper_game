@@ -7,6 +7,8 @@ class GamesController < ApplicationController
 
      def show
        @game=Game.find_by_id(params[:id]);
+       @userrank = Game.where('status = ?', 'success').select(:username, :time_taken, :sweep_count).order(:time_taken , :sweep_count );
+      
      end
 
      def new

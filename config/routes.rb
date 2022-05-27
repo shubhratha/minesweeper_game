@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   post 'tiles/sweeptile'
   post 'tiles/flagged_tile'
   resources :games do
-    resources :mines, only: %i[ create]
+    resources :mines, only: %i[ create, show, update, new]
   end
   #
   # resources :games  do
