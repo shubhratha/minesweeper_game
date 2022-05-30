@@ -8,7 +8,7 @@ class GamesController < ApplicationController
      def show
        @game=Game.find_by_id(params[:id]);
        @userrank = Game.where('status = ?', 'success').select(:username, :time_taken, :sweep_count).order(:time_taken , :sweep_count );
-      
+
      end
 
      def new
@@ -50,9 +50,21 @@ class GamesController < ApplicationController
              mines_tmp << tmp
              count = count + 1
            end
-           logger.error("ssssss#{mines_tmp}.inspect")
+
          end
-         render('games/gridboard')
+         first_click={}
+          loop do
+             first_click= {:x => 1+rand(12), :y => 1+rand(6)};
+            logger.error("clik1#{first_click}.inspect")
+            tile = @game.tiles.find_by_x_and_y(first_click[:x],first_click[:y]);
+            logger.error("tiles#{tile.inspect}")
+            count = tile.check_around
+            break if !mines_tmp.include?(first_click) && count == 0
+
+          end
+       logger.error("clik#{first_click}.inspect")
+
+        render template:'games/gridboard', locals:{first_click: first_click}
     end
 
 

@@ -29,10 +29,19 @@ height: 35px;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 <script>
+  var firstclicked = false;
   function sweep(val, game_id){
+
   var  gridposition =val.getAttribute('value');
   x = gridposition.split('_')[0];
-  y = gridposition.split('_')[1]
+  y = gridposition.split('_')[1];
+  if(firstclicked == false){
+    first_click=document.getElementById("game_first_click").value;
+    x = first_click.split(' ')[1];
+    y = first_click.split(' ')[3];
+    firstclicked = true;
+    
+  }
   console.log("gameid"+game_id)
   console.log(y)
   var token = $( 'meta[name="csrf-token"]' ).attr( 'content' );
@@ -113,6 +122,8 @@ function reveal_tile(resdata){
 <%= form_for(@game) do |f| %>
 <%= f.text_field :username %><br/>
 <%= f.hidden_field :time_taken  %>
+<%= f.hidden_field :first_click ,:value => first_click %>
+<%logger.error("first_click#{first_click.inspect}")%>
 <%= f.hidden_field :status  %>
   <div class="form-buttons" style="margin-top: 20px;">
     <%= f.submit("submit") %>
