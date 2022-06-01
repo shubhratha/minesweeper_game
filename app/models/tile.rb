@@ -1,15 +1,6 @@
 class Tile < ApplicationRecord
   belongs_to :game
 
-  def ismine
-    mine = self.game.mines.find_by_x_and_y(x,y)
-     if mine
-       return true
-     else
-       return false
-     end
-  end
-
   def check
     mines = self.game.mines.all.select(:x , :y)
     mine_grid = Array.new
@@ -30,9 +21,7 @@ class Tile < ApplicationRecord
     if tile.cleared
       return { :status =>1}
     else
-      results = tile.search
-      return {:status =>2, :tiles => results}
-
+      return {:status =>2, :tiles => tile.search}
     end
   end
 
@@ -103,5 +92,8 @@ class Tile < ApplicationRecord
     return count
   end
 
+  def ismine
+    !!mine = self.game.mines.find_by_x_and_y(x,y)
+  end
 
 end

@@ -1,19 +1,18 @@
 class TilesController < ApplicationController
-  before_action :load_game
+ before_action :find_game
 
- def sweeptile
-   @tile = @game.tiles.find_by_x_and_y(params[:x], params[:y])
-   @game.sweep_count+= 1
-   @game.save
-     res=@tile.check
-     if res[:status] == 2
-       tiles=res[:tiles]
-     end
+  def sweeptile
+    @tile = @game.tiles.find_by_x_and_y(params[:x], params[:y])
+    @game.sweep_count+= 1
+    @game.save
+    res=@tile.check
+    if res[:status] == 2
+      tiles=res[:tiles]
+    end
     respond_to do |format|
       format.json { render :json => res}
     end
- end
-
+  end
 
   def flagged_tile
     @tile = @game.tiles.find_by_x_and_y(params[:x], params[:y])
@@ -33,16 +32,16 @@ class TilesController < ApplicationController
       @game.save
       respond_to do |format|
         format.json { render :json => {:status => "success"}}
-      end
+    end
     else
-        respond_to do |format|
-          format.json { render :json => {:status => "fail"}}
-        end
+      respond_to do |format|
+        format.json { render :json => {:status => "fail"}}
       end
+    end
   end
 
   private
-  def load_game
+  def find_game
     @game = Game.find(params[:game_id])
   end
 end

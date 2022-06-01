@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_26_210727) do
+ActiveRecord::Schema.define(version: 2022_06_01_045721) do
 
   create_table "datee", id: false, force: :cascade do |t|
     t.integer "d1"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2022_05_26_210727) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "flagged_mine", default: 0
     t.integer "sweep_count", default: 0
+    t.integer "score"
   end
 
   create_table "mines", force: :cascade do |t|

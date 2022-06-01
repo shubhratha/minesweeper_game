@@ -1,25 +1,25 @@
 <style>
 .grid{
   background-color: blue;
-  height : 500px;
+  height : 400px;
   width : 500px;
 }
 .tile{
   height : 50px;
   width : 50px;
-    background-color: greenyellow;
+  background-color: greenyellow;
 }
 
 #drag1{
 width: 25px;
 height: 35px;
-
 }
 
 #count_up_timer{
-	font-size: 45px;
+	font-size: 25px;
 	font-weight: bold;
 	color: darkblue;
+  float:right;
 }
 #stop_count_up_timer{
 	background-color:black;
@@ -31,37 +31,32 @@ height: 35px;
 <script>
   var firstclicked = false;
   function sweep(val, game_id){
-
-  var  gridposition =val.getAttribute('value');
-  x = gridposition.split('_')[0];
-  y = gridposition.split('_')[1];
-  if(firstclicked == false){
-    first_click=document.getElementById("game_first_click").value;
-    x = first_click.split(' ')[1];
-    y = first_click.split(' ')[3];
-    firstclicked = true;
-    
-  }
-  console.log("gameid"+game_id)
-  console.log(y)
-  var token = $( 'meta[name="csrf-token"]' ).attr( 'content' );
-  $.ajax({
-   type: "POST",
-   url: 'http://localhost:3000/tiles/sweeptile?game_id=' + game_id,
-   data:{ x: x, y: y, game_id: game_id},
-   Contenttype:'json',
-   beforeSend: function ( xhr ) {
-       xhr.setRequestHeader( 'X-CSRF-Token', token );
-     },
-     success: function(resdata) {
-       reveal_tile(resdata)
-    },
-    error: function(xhr, thrownError) {
-        alert('Not OKay');
-        alert(thrownError)
+    var  gridposition =val.getAttribute('value');
+    x = gridposition.split('_')[0];
+    y = gridposition.split('_')[1];
+    if(firstclicked == false){
+      first_click=document.getElementById("game_first_click").value;
+      x = first_click.split(' ')[1];
+      y = first_click.split(' ')[3];
+      firstclicked = true;
     }
- });
-}
+    var token = $( 'meta[name="csrf-token"]' ).attr( 'content' );
+    $.ajax({
+      type: "POST",
+      url: 'http://localhost:3000/tiles/sweeptile?game_id=' + game_id,
+      data:{ x: x, y: y, game_id: game_id},
+      Contenttype:'json',
+      beforeSend: function ( xhr ) {
+        xhr.setRequestHeader( 'X-CSRF-Token', token );
+      },
+      success: function(resdata) {
+        reveal_tile(resdata)
+      },
+      error: function(xhr, thrownError) {
+        alert(thrownError)
+      }
+    });
+  }
 
 function reveal_tile(resdata){
   if (resdata['status']== 2 )
@@ -71,13 +66,11 @@ function reveal_tile(resdata){
      var x=result[i]['x'];
      var y=result[i]['y'];
      var count=result[i]['count'];
-     console.log(i);
      var td = document.getElementById('td_'+x+'_'+y);
      td.innerHTML += count;
      td.onclick = null;
-    document.getElementById('td_'+x+'_'+y).style.backgroundColor='#607d8b';
-  }
-
+     document.getElementById('td_'+x+'_'+y).style.backgroundColor='#607d8b';
+   }
   }
   if (resdata['status']== 0 )
     {
@@ -87,8 +80,8 @@ function reveal_tile(resdata){
        var y=result[i]['y'];
        var td = document.getElementById('td_'+x+'_'+y);
        td.onclick = null;
-      document.getElementById('td_'+x+'_'+y).style.backgroundColor='red';
-    }
+       document.getElementById('td_'+x+'_'+y).style.backgroundColor='red';
+     }
        setTimeout(  function() {
       alert('Game Failed');
       $('#username').show();
@@ -103,51 +96,51 @@ function reveal_tile(resdata){
   </script>
 
 
-  <div id='falgimage'  style="display: block;/* margin-top: 100px; *//* margin-left: 100px; */box-sizing: border-box;border: 1px solid black;width: 36%;height: 252px;background-color: darkgrey;" ><div><h3>MinesweeperGame</h3></div><div style="margin-bottom: 6px;">Instructions:<ul><li>Drag and drop Flags to mark as mines</li><li>Right click on tiles to sweep</li></div><img id="drag1" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
-    <img id="drag2" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
-    <img id="drag3" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
-    <img id="drag4" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
-    <img id="drag5" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
-    <img id="drag6" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
-    <img id="drag7" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
-    <img id="drag8" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
-    <img id="drag9" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
-    <img id="drag10" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
-    <div id="count_up_timer">00:00:00</div>
-    </div>
-
-
-<div id='username' style="display: none;/* margin-top: 100px; *//* margin-left: 100px; */box-sizing: border-box;border: 1px solid black;width: 90%;height: 200px;background-color: darkgrey;" >  <h2>Enter your name</h2>
-
-<%= form_for(@game) do |f| %>
-<%= f.text_field :username %><br/>
-<%= f.hidden_field :time_taken  %>
-<%= f.hidden_field :first_click ,:value => first_click %>
-<%logger.error("first_click#{first_click.inspect}")%>
-<%= f.hidden_field :status  %>
-  <div class="form-buttons" style="margin-top: 20px;">
-    <%= f.submit("submit") %>
+  <div id='falgimage'  style="display: block;/* margin-top: 100px; *//* margin-left: 100px; */box-sizing: border-box;border: 1px solid black;width: 36%;height: 170px;background-color: darkgrey;" ><div style="border-style: solid;margin-top: 0px;background-color: burlywood;" ><div style="text-align: center;color: #4b1818;font-size: 2.0em;">MinesweeperGame</div></div>
+  <div style="margin-bottom: 6px;">Instructions:<ul><li>Drag and drop Flags to mark as mines</li><li>Right click on tiles to sweep</li></div><img id="drag1" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
+  <img id="drag2" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
+  <img id="drag3" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
+  <img id="drag4" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
+  <img id="drag5" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
+  <img id="drag6" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
+  <img id="drag7" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
+  <img id="drag8" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
+  <img id="drag9" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
+  <img id="drag10" src="https://upload.wikimedia.org/wikipedia/commons/3/34/Emoji_u1f6a9.svg"  style="width: 25px;height: 35px;" draggable="true" ondragstart="drag(event)" width="336" height="69">
+  <div id="count_up_timer">00:00:00</div>
   </div>
 
-<% end %> </div>
-<table class ='grid'>
-  <% for i in 1..12 %>
-   <tr class='row'>
-     <%for j in 1..6%>
-     <% tile = @game.tiles.find_by_x_and_y(i,j)%>
-      <%if !tile.nil? && tile.cleared%>
-      <td class='tile' id='td_<%=i%>_<%=j%>' ondrop="drop(event)" ondragover="allowDrop(event)" value= "<%=i%>_<%=j%>_<%=@game.id%> " ><div> </td>
-      <%else%>
-      <td class='tile' id='td_<%=i%>_<%=j%>'  ondrop="drop(event)" ondragover="allowDrop(event)"  value= "<%=i%>_<%=j%>_<%=@game.id%> " onClick="sweep(this,'<%=@game.id%>')" > </td>
-      <%end%>
-     <%end%>
-   </tr>
-  <%end%>
-</table>
+
+  <div id='username' style="display: none;/* margin-top: 100px; *//* margin-left: 100px; */box-sizing: border-box;border: 1px solid black;width: 90%;height: 200px;background-color: darkgrey;" >  <h2>Enter your name</h2>
+
+  <%= form_for(@game) do |f| %>
+    <%= f.text_field :username %><br/>
+    <%= f.hidden_field :time_taken  %>
+    <%= f.hidden_field :first_click ,:value => first_click %>
+    <%logger.error("first_click#{first_click.inspect}")%>
+    <%= f.hidden_field :status  %>
+    <div class="form-buttons" style="margin-top: 20px;">
+    <%= f.submit("submit") %>
+    </div>
+  <% end %> </div>
+  <table class ='grid'>
+    <% for i in 1..12 %>
+     <tr class='row'>
+       <%for j in 1..6%>
+       <% tile = @game.tiles.find_by_x_and_y(i,j)%>
+        <%if !tile.nil? && tile.cleared%>
+        <td class='tile' id='td_<%=i%>_<%=j%>' ondrop="drop(event)" ondragover="allowDrop(event)" value= "<%=i%>_<%=j%>_<%=@game.id%> " ><div> </td>
+        <%else%>
+        <td class='tile' id='td_<%=i%>_<%=j%>'  ondrop="drop(event)" ondragover="allowDrop(event)"  value= "<%=i%>_<%=j%>_<%=@game.id%> " onClick="sweep(this,'<%=@game.id%>')" > </td>
+        <%end%>
+       <%end%>
+     </tr>
+    <%end%>
+  </table>
 <script>
+
 var timerVariable = setInterval(countUpTimer, 1000);
 var totalSeconds = 0;
-
 function countUpTimer() {
   ++totalSeconds;
   var hour = Math.floor(totalSeconds / 3600);
@@ -165,14 +158,12 @@ function countUpTimer() {
   function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
     gridposition = ev.path[1].getAttribute('value');
-    console.log(gridposition == null);
     if (gridposition != null){
         x = gridposition.split('_')[0];
         y = gridposition.split('_')[1];
         game_id = gridposition.split('_')[2];
         var td = document.getElementById('td_'+x+'_'+y);
         td.onclick = onClick="sweep(this,game_id)";
-        console.log(x+'_'+y)
         var token = $( 'meta[name="csrf-token"]' ).attr( 'content' );
         $.ajax({
          type: "POST",
@@ -189,14 +180,13 @@ function countUpTimer() {
   function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));;
+    ev.target.appendChild(document.getElementById(data));;
     gridposition = ev.target.getAttribute('value');
     x = gridposition.split('_')[0];
     y = gridposition.split('_')[1]
     game_id = gridposition.split('_')[2];
     var td = document.getElementById('td_'+x+'_'+y);
     td.onclick = null;
-    console.log(x+'_'+y)
     var token = $( 'meta[name="csrf-token"]' ).attr( 'content' );
     $.ajax({
      type: "POST",
@@ -209,7 +199,7 @@ function countUpTimer() {
          console.log(resdata)
          if (resdata['status']=='success')
          {
-         setTimeout(  function() {
+          setTimeout(  function() {
           alert('Success');
           $('#username').show();
           $('.grid').hide();
@@ -217,12 +207,10 @@ function countUpTimer() {
           time_taken = document.getElementById('count_up_timer').innerHTML;
           document.getElementById('game_time_taken').value = time_taken
           document.getElementById('game_status').value = "success"
-        }, 2000);
-
-         }
+         }, 2000);
+        }
       },
       error: function(xhr, thrownError) {
-          alert('Not OKay');
           alert(thrownError)
       }
    })

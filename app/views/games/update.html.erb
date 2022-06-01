@@ -1,41 +1,53 @@
 <div class ='grid'><h2>Score Board</h2>
+  <h3>Top 3 Score</h3>
 <table >
-  <tr><th>Rank</th><th>Name</th><th>No of cicks</th><th>Time</th></tr>
-  <%@userrank.each_with_index  do|u, i| %>
-  <tr><td><%=i%></td><td><%=u.username%></td><td><%=u.sweep_count%></td><td><%=u.time_taken%></td></tr>
+  <tr><th>Rank</th><th>Name</th><th>score</th><th>No of cicks</th><th>Time</th></tr>
+  <%@topscores.each_with_index  do|u, i| %>
+  <tr><td><%=i+1%></td><td><%=u.username%></td><td><%=u.score%></td><td><%=u.sweep_count%></td><td><%=u.time_taken%></td></tr>
   <%end%>
+</table>
+<h3>your Score</h3>
+<table >
+<tr><th>Name</th><th>score</th><th>No of cicks</th><th>Time</th></tr>
+<tr><td><%=@game.username%></td><td><%=@game.score%></td><td><%=@game.sweep_count%></td><td><%=@game.time_taken%></td></tr>
 </table>
 </div>
 
 <style>
   body {
-  font-family: "Trebuchet MS", Arial, sans-serif;
-  overflow-x: hidden;
-  padding: 0px;
-  margin: 0px;
-}
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    overflow-x: hidden;
+    padding: 0px;
+    margin: 0px;
+  }
 
-thead,
-h1,
-h2
- {
-  text-align: center;
-   padding: 5px;
-}
-table,
-th,
-td,
-tr {
-  border: 1px solid black;
-  padding: 5px;
-  margin: 5px;
-  cursor: pointer;
-}
-table {
-  background-color: white;
-  width: 95%;
-  box-shadow: 1px 1px 5px black;
-  border-radius: 7px;
-}
+  thead,
+  h1,
+  h2
+  {
+    text-align: center;
+    padding: 5px;
+  }
+  table,
+  th,
+  td,
+  tr {
+    border: 1px solid black;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  table {
+    background-color: white;
+    width: 95%;
+    box-shadow: 1px 1px 5px black;
+    border-radius: 7px;
+  }
+  th{
+    background-color: #c9de87;
+  }
 
+  td{
+    background-color: #d8cf99;
+  }
 </style>
